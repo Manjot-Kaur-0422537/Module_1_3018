@@ -22,3 +22,4 @@ describe("Health Check Endpoint", () => {
     expect(res.body).toHaveProperty("version", "1.0.0");
   });
 });
+
