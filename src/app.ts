@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+
 import { 
   calculatePortfolioPerformance, 
   findLargestHolding, 
@@ -10,7 +11,7 @@ const app = express();
 app.use(express.json()); // needed for parsing JSON request bodies
 
 // Health check endpoint
-app.get("/api/v1/health", (req: Request, res: Response): void => {
+app.get("/health", (req: Request, res: Response): void => {
   res.json({
     status: "OK",
     uptime: process.uptime(),

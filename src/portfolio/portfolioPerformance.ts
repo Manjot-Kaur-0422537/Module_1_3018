@@ -41,16 +41,12 @@ export function calculatePortfolioPerformance(
 
   // Largest holding
   const largestHolding = assets && assets.length > 0
-    ? assets.reduce((max, asset) => (asset.value > max.value ? asset : max), assets[0])
+    ? findLargestHolding(assets)
     : null;
 
   // Allocation percentages
-  const totalValue = assets?.reduce((sum, asset) => sum + asset.value, 0) || 0;
-  const allocationPercentages = totalValue
-    ? assets?.map(asset => ({
-        name: asset.name,
-        percentage: parseFloat(((asset.value / totalValue) * 100).toFixed(2)),
-      }))
+  const allocationPercentages = assets && assets.length > 0
+    ? assetAllocationPercentages(assets)
     : undefined;
 
   return {
@@ -64,13 +60,15 @@ export function calculatePortfolioPerformance(
   };
 }
 
-// Function 2: Find the Largest Holding
+// Function 2a: Find the Largest Holding
 export function findLargestHolding(assets: Asset[]): Asset | null {
   if (!assets || assets.length === 0) return null;
-  return assets.reduce((max, asset) => (asset.value > max.value ? asset : max), assets[0]);
+  return assets.reduce((max, asset) =>
+    asset.value > max.value ? asset : max
+  , assets[0]);
 }
 
-// Function 3: Calculate Asset Allocation Percentages
+// Function 2b: Calculate Asset Allocation Percentages
 export function assetAllocationPercentages(
   assets: Asset[]
 ): { name: string; percentage: number }[] {
